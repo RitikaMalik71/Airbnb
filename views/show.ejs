@@ -1,7 +1,9 @@
 <% layout("/layout/boilerplate") %>
 <script>
   const mapToken="<%=process.env.MAP_TOKEN%>";
-  const coordinates=<%-JSON.stringify (listings.geometry.coordinates)%>;
+  console.log(mapToken);
+  const coordinates="<%-JSON.stringify (listings.geometry.coordinates)%>";
+ 
 </script>
 <body>
     <div class="row">
@@ -101,8 +103,10 @@
           
             </p>
           </div>
+          <%if(currUser&&listings.owner._id.equals(currUser._id)){%>
         <form method="POST" action="/listings/<%=listings._id%>/reviews/<%=review._id%>?_method=DELETE">
           <button class="btn btn-sm btn-dark">Delete</button>
+          <% }%>
           <br>
           <br>
         </form>

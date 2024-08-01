@@ -88,7 +88,11 @@ username : "delta-student"
     let registerduser= await User.register(fakeuser,"helloworld");
     res.send(registerduser);
 });
-
+app.get("/",(req,res)=>{
+    res.redirect("/listings");
+    });app.get("/",(req,res)=>{
+        res.redirect("/listings");
+        });
 
 
 app.use ((req,res,next)=>{
