@@ -5,9 +5,10 @@ if(process.env.NODE_ENV!="production"){
 
 const express=require("express");
 const app=express();
+const path=require("path");
 const mongoose=require("mongoose");
 const ExpressError=require("./utils/ExpressError");
-const path=require("path");
+
 const methodOverride = require("method-override");
 const ejsMate=require("ejs-mate");
 const listingsRouter=require("./routes/listings.js");
@@ -46,6 +47,8 @@ const sessionOptions={
     },
 };
 
+
+app.use(express.static(path.join(__dirname,"/public")));
 app.use(session(sessionOptions));
 app.use(flash());
 app.use(passport.initialize());
@@ -59,7 +62,7 @@ app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname,"/public")));
 
 
 
