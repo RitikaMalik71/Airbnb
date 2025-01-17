@@ -1,8 +1,9 @@
 <% layout("/layout/boilerplate") %>
 <script>
   const mapToken="<%=process.env.MAP_TOKEN%>";
-  console.log(mapToken);
-  const coordinates="<%-JSON.stringify (listings.geometry.coordinates)%>";
+   const coordinates=<%-JSON.stringify (listings.geometry.coordinates)%>;
+   console.log(coordinates);
+   console.log(typeof(coordinates));
  
 </script>
 <body>
@@ -115,9 +116,6 @@
                <% }%>
     </div>
   <%}%>
-   
-        
-    
     </div>   
     <div class="col-8 offset-3">
       <h4>Where you'll be </h4>
@@ -128,5 +126,5 @@
 
 <br>
 <br>
-<script src="public/js/map.js"></script>
+<script src="/css/js/map.js"></script>
 </body>
