@@ -29,30 +29,35 @@ module.exports.showListing=async (req,res)=>{
     res.render("show.ejs",{listings});
     };
 
-    module.exports.createListing=async(req,res,next)=>{
-     let response= await geocodingClient.forwardGeocode({
-        query:req.body.listing.location,
-        limit: 1
-      })
-        .send()
-   
-   
-  
-     
-     
-      let url=req.file.path;
-      let filename=req.file.filename;
-     
-        const newListing =new Listing(req.body.listing);
-        console.log(newListing);
-        newListing.owner=req.user._id;
-        newListing.image={url,filename};
-        newListing.geometry=response.body.features[0].geometry;
-        console.log(newListing.geometry);
-         let savedListing= await newListing.save();
-         console.log(savedListing);
-        req.flash("success","New Listing Created");
-        res.redirect("/listings");
+    module.exports.createListing = async (req, res, next) => {
+      try {
+        let response = await geocodingClient
+          .forwardGeocode({
+            query: req.body.listing.location,
+            limit: 1,
+          })
+          .send();
+    
+        let url = req.file ? req.file.path : null;
+        let filename = req.file ? req.file.filename : null;
+    
+        const newListing = new Listing(req.body.listing);
+        newListing.owner = req.user._id;
+    
+        if (url && filename) {
+          newListing.image = { url, filename };
+        }
+    
+        newListing.geometry = response.body.features[0].geometry;
+        await newListing.save();
+    
+        req.flash('success', 'New Listing Created');
+        res.redirect('/listings');
+      } catch (error) {
+        console.error('Error creating listing:', error.message);
+        req.flash('error', 'Something went wrong. Please try again.');
+        res.redirect('/listings');
+      }
     };
 
     module.exports.renderEditForm=async(req,res)=>{
@@ -68,19 +73,26 @@ module.exports.showListing=async (req,res)=>{
     };
 
     module.exports.updateListing=async (req,res)=>{
-        let {id}=req.params;
+      try{
+
+    let {id}=req.params;
         
     
     let listing= await Listing.findByIdAndUpdate(id, {...req.body.listing});
-    if(typeof req.file!=undefined){
-
-    let url=req.file.path;
-      let filename=req.file.filename;
-      listing.image={url,filename};
+    if (req.file) {
+      let url = req.file.path;
+      let filename = req.file.filename;
+      listing.image = { url, filename };
       await listing.save();
     }
+    
      req.flash("success"," Listing Updated!");
      res.redirect(`/listings/${id}`);
+    }catch (error) {
+      console.error('Error updating listing:', error.message);
+      req.flash('error', 'Something went wrong. Please try again.');
+      res.redirect('/listings');
+    }
     };
 
     module.exports.destroyListing=async (req,res)=>{
