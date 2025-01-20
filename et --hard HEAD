@@ -1,0 +1,17 @@
+[33mcommit fa1b8062b990e23ed28218efa983b5f88bb9e41f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: RitikaMalik71 <ritika1234malik@gmail.com>
+Date:   Wed Jan 15 12:08:06 2025 +0530
+
+    Fix path for map.js in show.ejs and update static file serving
+
+[33mcommit 79d37c3df38ce301cafa030a138abad82f2d3658[m
+Author: RitikaMalik71 <ritika1234malik@gmail.com>
+Date:   Thu Aug 1 21:16:35 2024 +0530
+
+    new changes
+
+[33mcommit 3f27b43af1f18ddd1ecd2002bebd92b6c286b482[m
+Author: RitikaMalik71 <ritika1234malik@gmail.com>
+Date:   Wed Jul 31 10:49:45 2024 +0530
+
+    first project commit
